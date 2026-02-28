@@ -1,11 +1,11 @@
 name: Setup Repository Labels
 
 on:
-  workflow_dispatch:  # Manual trigger
+  workflow_dispatch: # Manual trigger
   push:
     branches: [main, master]
     paths:
-      - '.github/workflows/setup-labels.yml'
+      - ".github/workflows/setup-labels.yml"
 
 permissions:
   issues: write
@@ -129,12 +129,12 @@ jobs:
                 description: 'Extra large PR (>500 lines changed)' 
               }
             ];
-            
+
             console.log('='.repeat(60));
             console.log('🏷️  REPOSITORY LABEL SETUP');
             console.log('='.repeat(60));
             console.log(`Total labels to create: ${requiredLabels.length}\n`);
-            
+
             // Get existing labels with pagination
             const existingLabels = await github.paginate(
               github.rest.issues.listLabelsForRepo,
@@ -144,14 +144,14 @@ jobs:
                 per_page: 100
               }
             );
-            
+
             const existingLabelNames = existingLabels.map(label => label.name);
-            
+
             let created = 0;
             let updated = 0;
             let skipped = 0;
             let failed = 0;
-            
+
             // Process each label
             for (const label of requiredLabels) {
               try {
@@ -189,7 +189,7 @@ jobs:
                 failed++;
               }
             }
-            
+
             // Summary
             console.log('\n' + '='.repeat(60));
             console.log('📊 SUMMARY');
@@ -199,7 +199,7 @@ jobs:
             console.log(`⏭️  Skipped:  ${skipped}`);
             console.log(`❌ Failed:   ${failed}`);
             console.log('='.repeat(60));
-            
+
             // Fail the step if any labels failed to create/update
             if (failed > 0) {
               core.setFailed(`Label setup failed! ${failed} label(s) could not be created or updated.`);

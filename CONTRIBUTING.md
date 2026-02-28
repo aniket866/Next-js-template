@@ -46,6 +46,7 @@ Feature suggestions are welcome! Please:
 - Provide a clear description of the feature
 - Explain why this feature would be useful
 - Include examples of how it would work
+
 ### Contributing Code
 
 1. **Submit an Issue First**: For features, bugs, or enhancements, create an issue first
@@ -60,6 +61,7 @@ We accept the use of AI-powered tools (GitHub Copilot, ChatGPT, Claude, Cursor, 
 ⚠️ However, transparency is required: if you use AI assistance, please mention it in your PR description. This helps maintainers during code review and ensure the quality of contributions.
 
 What we expect:
+
 - **Disclose AI usage**: A simple note like "Used GitHub Copilot for autocompletion" or "Generated initial test structure with ChatGPT" is sufficient.
 - **Specify the scope**: Indicate which parts of your contribution involved AI assistance.
 - **Review AI-generated content**: Ensure you understand and have verified any AI-generated code before submitting.
@@ -73,22 +75,26 @@ TODO: List prerequisites specific to your project
 ### Setup
 
 1. **Fork the Repository**
+
    ```bash
    # Click the 'Fork' button at the top right of this page
    ```
 
 2. **Clone Your Fork**
+
    ```bash
    git clone https://github.com/YOUR_USERNAME/TODO.git
    cd TODO
    ```
 
 3. **Add Upstream Remote**
+
    ```bash
    git remote add upstream https://github.com/AOSSIE-Org/TODO.git
    ```
 
 4. **Install Dependencies**
+
    ```bash
    npm install
    # or yarn install
@@ -141,6 +147,7 @@ git commit -m "fix: resolve navigation bug"
 ```
 
 **Commit Message Format:**
+
 - `feat:` for new features
 - `fix:` for bug fixes
 - `docs:` for documentation changes
@@ -189,19 +196,23 @@ git push origin feature/your-feature-name
 
 ```markdown
 ## Description
+
 Brief description of what this PR does
 
 ## Related Issue
+
 Closes #issue_number
 
-
 ## Screenshots/Video (if applicable)
+
 Add screenshots here
 
 ## Testing(if applicable)
+
 Steps to test the changes
 
 ## Checklist
+
 - [ ] Code follows style guidelines
 - [ ] Self-review completed
 - [ ] Documentation updated
@@ -235,12 +246,14 @@ TODO: Add project-specific code style guidelines
 - Avoid unnecessary complexity and minor over-optimization
 
 ### JavaScript/TypeScript
+
 - Use ES6+ syntax
 - Prefer `const` over `let`, avoid `var`
 - Use arrow functions where appropriate
 - Follow ESLint rules
 
 ### Python
+
 - Follow PEP 8 style guide
 - Use type hints where applicable
 - Write docstrings for functions/classes
@@ -263,6 +276,7 @@ pre-commit install
 #### 1. **Pre-commit Hook Failed: Trailing Whitespace**
 
 **Error:**
+
 ```text
 Trim Trailing Whitespace.................................................Failed
 - hook id: trailing-whitespace
@@ -271,6 +285,7 @@ Trim Trailing Whitespace.................................................Failed
 ```
 
 **Solution:**
+
 ```bash
 # Pre-commit automatically fixes this. Just re-stage and commit:
 git add .
@@ -280,6 +295,7 @@ git commit -m "your message"
 #### 2. **Pre-commit Hook Failed: End of File Fixer**
 
 **Error:**
+
 ```text
 Fix End of Files.........................................................Failed
 - hook id: end-of-file-fixer
@@ -288,6 +304,7 @@ Fix End of Files.........................................................Failed
 ```
 
 **Solution:**
+
 ```bash
 # Files are automatically fixed. Re-add and commit:
 git add .
@@ -297,6 +314,7 @@ git commit -m "your message"
 #### 3. **Pre-commit Hook Failed: Check YAML/JSON/TOML**
 
 **Error:**
+
 ```text
 Check Yaml..........................................Failed
 - hook id: check-yaml
@@ -306,6 +324,7 @@ File .github/workflows/test.yml: mapping values are not allowed here
 ```
 
 **Solution:**
+
 ```bash
 # Fix the syntax error in the file (check line number in error)
 # Common issues:
@@ -318,6 +337,7 @@ File .github/workflows/test.yml: mapping values are not allowed here
 #### 4. **Pre-commit Hook Failed: Detect Secrets**
 
 **Error:**
+
 ```text
 detect-secrets...........................................................Failed
 - hook id: detect-secrets
@@ -330,6 +350,7 @@ Potential secrets about to be added to git repo:
 ```
 
 **Solution:**
+
 ```bash
 # Option 1: Remove the secret and use environment variables
 # Replace hardcoded secrets with:
@@ -343,6 +364,7 @@ Potential secrets about to be added to git repo:
 #### 5. **Pre-commit Hook Failed: Mixed Line Endings**
 
 **Error:**
+
 ```text
 Mixed line ending........................................................Failed
 - hook id: mixed-line-ending
@@ -351,6 +373,7 @@ Mixed line ending........................................................Failed
 ```
 
 **Solution:**
+
 ```bash
 # Automatically fixed to LF. Re-add and commit:
 git add .
@@ -360,6 +383,7 @@ git commit -m "your message"
 #### 6. **Pre-commit Hook Failed: Large Files**
 
 **Error:**
+
 ```text
 Check for added large files..............................................Failed
 - hook id: check-added-large-files
@@ -369,6 +393,7 @@ large.zip (5.2 MB) exceeds 500 KB
 ```
 
 **Solution:**
+
 ```bash
 # Option 1: Remove large files
 git rm --cached large.zip
@@ -386,6 +411,7 @@ git add .gitattributes
 #### 7. **Pre-commit Hook Failed: Merge Conflict Markers**
 
 **Error:**
+
 ```text
 Check for merge conflicts................................................Failed
 - hook id: check-merge-conflict
@@ -396,6 +422,7 @@ Merge conflict markers found in:
 ```
 
 **Solution:**
+
 ```bash
 # Open the file and remove conflict markers:
 # <<<<<<< HEAD
@@ -410,6 +437,7 @@ Merge conflict markers found in:
 **Problem:** Commits go through without pre-commit checks
 
 **Solution:**
+
 ```bash
 # Reinstall pre-commit hooks
 pre-commit uninstall
@@ -424,6 +452,7 @@ pre-commit run --all-files
 **Problem:** Pre-commit is slow on every commit
 
 **Solution:**
+
 ```bash
 # Run only on changed files (default behavior)
 git commit -m "message"
@@ -438,12 +467,14 @@ pre-commit autoupdate
 #### 10. **Hook Installation Failed**
 
 **Error:**
+
 ```text
 An error has occurred: InvalidManifestError:
 =====> /path/to/.pre-commit-config.yaml does not exist
 ```
 
 **Solution:**
+
 ```bash
 # Ensure you're in the project root directory
 cd /path/to/project/root
@@ -523,7 +554,7 @@ If you encounter issues not covered here:
 
 - Check existing documentation first
 - Search closed issues for similar problems
-- Ask in Discord 
+- Ask in Discord
 - Tag maintainers if your PR is unattended for 1-2 weeks on discord
 
 ## 🎯 Issue Assignment
@@ -532,10 +563,9 @@ If you encounter issues not covered here:
 <!--
 - Wait for assignment before starting work
 - Issues will be reassigned if inactive for extended periods
--->
+  -->
 - If there are no active PRs for an issue for 2+ days, mention your intent under the issue and begin
 - Avoid working on issues which are assigned to someone, even if they are inactive
 - Check for existing PRs before starting to avoid duplication, as there might PRs that didn't mention the related issue
-
 
 Thank you for contributing to TODO! Your efforts help make this project better for everyone. 🚀

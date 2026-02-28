@@ -3,7 +3,7 @@ name: Template Sync
 on:
   # cronjob trigger - runs monthly on the 1st at midnight
   schedule:
-  - cron: "0 0 1 * *"
+    - cron: "0 0 1 * *"
   workflow_dispatch:
 jobs:
   repo-sync:

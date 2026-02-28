@@ -23,11 +23,7 @@ export const metadata: Metadata = {
 
   description: siteConfig.description,
 
-  keywords: [
-    "TODO",
-    "Open Source",
-    "Stability Nexus",
-  ],
+  keywords: ["TODO", "Open Source", "Stability Nexus"],
 
   authors: [
     {
@@ -72,11 +68,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
     </html>
   );
 }

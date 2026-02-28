@@ -36,13 +36,13 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const prBody = context.payload.pull_request.body || '';
-            
+
             // Match patterns: Fixes #123, Closes #123, Resolves #123, etc.
             const issuePatterns = [
               /(?:fix|fixes|fixed|close|closes|closed|resolve|resolves|resolved)\s+#(\d+)/gi,
               /#(\d+)/g
             ];
-            
+
             let issueNumber = null;
             for (const pattern of issuePatterns) {
               const match = prBody.match(pattern);
@@ -52,7 +52,7 @@ jobs:
                 break;
               }
             }
-            
+
             core.setOutput('issue_number', issueNumber || '');
             return issueNumber;
 
@@ -64,7 +64,7 @@ jobs:
           script: |
             const issueNumber = '${{ steps.extract-issue.outputs.issue_number }}';
             const prNumber = context.payload.pull_request.number;
-            
+
             try {
               // Fetch issue labels
               const issue = await github.rest.issues.get({
@@ -99,9 +99,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const prNumber = context.payload.pull_request.number;
-            
+
             console.log('No issue linked to this PR');
-            
+
             // Add "no-issue-linked" label
             await github.rest.issues.addLabels({
               owner: context.repo.owner,
@@ -118,17 +118,17 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const prNumber = context.payload.pull_request.number;
-            
+
             // Get list of files changed in the PR
             const files = await github.rest.pulls.listFiles({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: prNumber
             });
-            
+
             const changedFiles = files.data.map(file => file.filename);
             core.setOutput('files', JSON.stringify(changedFiles));
-            
+
             return changedFiles;
 
       - name: Apply file-based labels
@@ -138,9 +138,9 @@ jobs:
           script: |
             const prNumber = context.payload.pull_request.number;
             const changedFiles = JSON.parse('${{ steps.changed-files.outputs.files }}');
-            
+
             const fileLabels = [];
-            
+
             // Define file-based label mappings
             const labelMappings = {
               'documentation': ['.md', 'README', 'CONTRIBUTING', 'LICENSE', '.txt'],
@@ -155,7 +155,7 @@ jobs:
               'docker': ['Dockerfile', 'docker-compose', '.dockerignore'],
               'ci-cd': ['.github/', '.gitlab-ci', 'Jenkinsfile', '.circleci']
             };
-            
+
             // Check each file against label mappings
             for (const file of changedFiles) {
               for (const [label, patterns] of Object.entries(labelMappings)) {
@@ -168,7 +168,7 @@ jobs:
                 }
               }
             }
-            
+
             if (fileLabels.length > 0) {
               console.log(`Applying file-based labels: ${fileLabels.join(', ')}`);
               
@@ -189,20 +189,20 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const prNumber = context.payload.pull_request.number;
-            
+
             // Get PR details to calculate size
             const pr = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: prNumber
             });
-            
+
             const additions = pr.data.additions;
             const deletions = pr.data.deletions;
             const totalChanges = additions + deletions;
-            
+
             console.log(`PR has ${additions} additions and ${deletions} deletions (${totalChanges} total changes)`);
-            
+
             // Determine size label based on total changes
             let sizeLabel = '';
             if (totalChanges <= 10) {
@@ -216,26 +216,26 @@ jobs:
             } else {
               sizeLabel = 'size/XL';
             }
-            
+
             console.log(`Calculated size label: ${sizeLabel}`);
-            
+
             // Get current labels on the PR
             const currentLabels = await github.rest.issues.listLabelsOnIssue({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber
             });
-            
+
             const existingSizeLabels = currentLabels.data
               .map(label => label.name)
               .filter(name => name.startsWith('size/'));
-            
+
             // Check if the size label needs to be changed
             if (existingSizeLabels.length === 1 && existingSizeLabels[0] === sizeLabel) {
               console.log(`Size label ${sizeLabel} is already correct, no changes needed`);
               return;
             }
-            
+
             // Remove outdated size labels only if they differ
             if (existingSizeLabels.length > 0) {
               console.log(`Removing outdated size labels: ${existingSizeLabels.join(', ')}`);
@@ -248,7 +248,7 @@ jobs:
                 });
               }
             }
-            
+
             // Apply the new size label
             console.log(`Applying new size label: ${sizeLabel}`);
             await github.rest.issues.addLabels({
@@ -268,7 +268,7 @@ jobs:
           script: |
             const prNumber = context.payload.pull_request.number;
             const prAuthor = context.payload.pull_request.user.login;
-            
+
             try {
               // Check if user is a first-time contributor
               const commits = await github.rest.repos.listCommits({
@@ -327,9 +327,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const prNumber = context.payload.pull_request.number;
-            
+
             console.log('Adding pending-coderabbit-review label');
-            
+
             await github.rest.issues.addLabels({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -344,14 +344,14 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const prNumber = context.payload.pull_request.number;
-            
+
             // Get current labels on PR
             const pr = await github.rest.issues.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber
             });
-            
+
             const currentLabels = pr.data.labels.map(label => label.name);
             console.log('='.repeat(50));
             console.log('PR Label Sync Complete');
